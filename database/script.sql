@@ -5,33 +5,22 @@ drop table if exists users cascade;
 drop table if exists tasks cascade;
 drop table if exists books cascade;
 
-create table roles (
-	roleid serial not null primary key,
-	description varchar(10) not null
-);
-
-create table accounts(
-	accountid serial not null primary key,
-	accountnumber varchar(255) not null,
-	sum money 
-);
-
-create table statusbook (
-	statusid serial not null primary key,
-	description varchar(10) not null
-);
-
 
 create table users(
 	userid serial not null primary key,
-	roleid int not null references roles(roleid),
+	role  varchar(10) not null,
 	login varchar(10) not null,
 	password varchar(128) not null,
 	firstname varchar(10) not null,
 	lastname varchar(10) not null,
-	position  varchar(20) not null,
-	about text not null,
-	accountid int not null references accounts(accountid)
+	position  varchar(20) not null
+);
+
+create table accounts(
+	accountid serial not null primary key,
+	userid int not null references users(userid),
+	accountnumber varchar(255) not null,
+	balance money 
 );
 
 create table tasks(
@@ -45,7 +34,7 @@ create table tasks(
 
 create table books(
 	bookid serial not null primary key,
-	statusid int not null references statusbook(statusid),
+	status varchar(10) not null,
 	taskid int not null references tasks(taskid),
 	customerid int not null references users(userid), 
 	freelancerid int references users(userid)
