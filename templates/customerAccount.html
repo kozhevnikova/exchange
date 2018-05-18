@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+	<head>
+        {{ template "nav.html" .}}
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                <script>
+                    function send(){
+                        var balance = document.getElementById("money").value;
+                        axios({
+                            method:"post",
+                            url:"/addMoney",
+                            data:{ 
+                                "balance": balance,
+                            },
+                        }).then(function(response){
+                            window.location.replace("/account");
+                        }).catch(function(error){
+                            alert("Insert valid data");
+                        });
+                    }
+                </script>
+	</head>
+	<body>
+        {{.AccountNumber}}
+        {{.Balance}}
+        <label>Add to balance</label>
+        <input type="text" id="money"/>
+        <button onclick="send()">Add</button>
+	</body> 
+</html>

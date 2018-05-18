@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+	<head>
+        {{ template "nav.html" .}}
+		<title>Without title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+        <a href="/createTask">Create Task </a><br>
+        <a href="/seeProposals">Proposals</a><br>
+        {{range .}}
+                <li>
+                    <form method="post" action="/deleteTask">
+                        <input type = "hidden" name="task" value={{.Taskid}}></input>
+                        <label style="font-weight: bold">{{ .Title}}</label> <br>
+                        <ol>Published: {{ .Date.Format "01-02-06" }}</ol>
+                        <ol>Details: {{ .Description }}</ol>
+                        <ol>Cost: {{ .Budget }}</ol>
+                        <ol>From: {{ .Customer }}</ol>
+                        <button> Delete </button>
+                    </form>
+                </li>
+            {{end}} 
+	</body> 
+</html>

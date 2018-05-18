@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+	<head>
+        {{ template "nav.html" .}}
+		<title>Without title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                <script>
+                    function send(){
+                        var title = document.getElementById("title").value;
+                        var description = document.getElementById("description").value;
+                        var budget = document.getElementById("budget").value;
+                        axios({
+                            method:"post",
+                            url:"/create",
+                            data:{ 
+                                "title":title,
+                                "description":description,
+                                "budget":budget,
+                            },
+                        }).then(function(response){
+                            window.location.replace("/tasks");
+                        }).catch(function(error){
+                            alert("Insert valid data");
+                        });
+                    }
+                </script>
+	</head>
+	<body>
+        <input type="text" id="title" placeholder="Title"/> <br>
+        <input type="text" id="description" size=50 placeholder="Description"/> <br>
+        <input type="text" id="budget" placeholder="Budget"/> <br>
+        <button onclick="send()"> Submit</button>
+	</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+	<head>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                <script>
+                    function send(){
+                        var login = document.getElementById("login").value;
+                        var password = document.getElementById("password").value;
+                        var r = document.getElementById("role");
+                        var role = r.options[r.selectedIndex].value;
+                        var firstname = document.getElementById("firstname").value;
+                        var lastname = document.getElementById("lastname").value;
+                        var position = document.getElementById("position").value;
+                        var status;
+                        axios({
+                            method:"post",
+                            url:"/singup",
+                            data:{ 
+                                "login":login,
+                                "password":password,
+                                "role":role,
+                                "firstname":firstname,
+                                "lastname":lastname,
+                                "position":position,
+                            },
+                        }).then(function(response){
+                            window.location.replace("/");
+                        }).catch(function(error){
+                            alert("User already exists");
+                        });
+                    }
+                </script>
+	</head>
+	<body>
+            <input type="text"	id="login" placeholder="Login" autocomplete="off"/>
+            <input type="password"	id="password" placeholder="Password" autocomplete="off"/>
+            <select id="role">
+                <option value="customer">Customer</option>
+                <option value="freelancer">Freelancer</option>
+            </select>
+            <input type="text"	id="firstname" placeholder="First name" autocomplete="off"/>
+            <input type="text"	id="lastname" placeholder="Last name" autocomplete="off"/>
+            <input type="text"	id="position" placeholder="Position" autocomplete="off"/>
+            <input id="button" onclick="send()"  type="submit" value="Sing up" /> 
+            <a href="/">Login</a>
+	</body> 
+</html>

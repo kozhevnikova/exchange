@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+	<head>
+		<title>Without title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                <script>
+                    function send(){
+                        var login = document.getElementById("login").value;
+                        var password = document.getElementById("password").value;
+                        axios({
+                            method:"post",
+                            url:"/login",
+                            data:{ 
+                                "login":login,
+                                "password":password,
+                            },
+                        }).then(function(response){
+                            window.location.replace("/main");
+                        }).catch(function(error){
+                            alert("Login or password incorrect");
+                        });
+                    }
+                </script>
+	</head>
+	<body>
+        <input type="text"	 id="login" placeholder="Login" autocomplete="off"/>
+        <input type="password"	  id="password" placeholder="Password" autocomplete="off"/>
+        <input id="button" onclick="send()"  type="submit" value="Login" /> 
+        <a href="/registration"> Sing up </a>
+	</body> 
+</html>

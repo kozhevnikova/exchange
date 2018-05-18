@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+	<head>
+        {{ template "nav.html" .}}
+		<title>Without title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+        <a href="/createTask">Create Task </a><br>
+        {{range .}}
+            <li>
+                <form action="/changeStatus" method="post">
+                    <input type = "hidden" name="task" value={{.Taskid}}></input>
+                    <input type="hidden" name="book" value={{.Bookid}}></input>
+                    <ol>Current status: {{.Status}}</ol>
+                    <ol>Title: {{ .Title}}</ol> 
+                    <ol>Details: {{ .Description }}</ol>
+                    <ol>Cost: {{ .Budget }}</ol>
+                    <label> Change status of this proposal</label>
+                    <select name="status">
+                        <option value="reviewing">Reviewing</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="finished">Finished</option>
+                        <option value="refused">Refused</option>
+                    </select>
+                    <input type="submit" value="Change"/>
+                </form>
+            </li>
+        {{end}} 
+	</body> 
+</html>
