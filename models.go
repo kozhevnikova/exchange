@@ -153,7 +153,7 @@ func (router *router) Login(w http.ResponseWriter, r *http.Request) {
 
 		if err == sql.ErrNoRows {
 			w.WriteHeader(http.StatusNotFound)
-		} else if err == nil && u.Password == returnpassword {
+		} else if err == nil && checkPasswordHash(u.Password, returnpassword) {
 			user := &StoreUser{
 				Userid: returnuserid,
 				Login:  returnlogin,
@@ -211,6 +211,10 @@ func (router *router) Registration(w http.ResponseWriter, r *http.Request) {
 
 		if count == 0 {
 			var userid int
+			hashedpasssord, err := hashPassword(u.Password)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "ERROR > hashing password >", err)
+			}
 			_ = router.db.QueryRow(`insert into users(
 					login,
 					role,
@@ -220,7 +224,7 @@ func (router *router) Registration(w http.ResponseWriter, r *http.Request) {
 					position) values($1,$2,$3,$4,$5,$6) returning userid`,
 				u.Login,
 				u.Role,
-				u.Password,
+				hashedpasssord,
 				u.Firstname,
 				u.Lastname,
 				u.Position).Scan(&userid)
